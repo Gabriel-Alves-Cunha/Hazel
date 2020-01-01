@@ -1,8 +1,5 @@
 #pragma once
 
-
-#include <memory>
-
 #include "Core.h"
 
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_DEBUG

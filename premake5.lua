@@ -21,6 +21,9 @@ project "Hazel"
 	targetdir ("%{prj.name}/" .. outputdir .. "/bin")
 	objdir ("%{prj.name}/" .. outputdir .. "/bin-int")
 
+	pchheader "hzpch.h"
+	pchsource "Hazel/src/hzpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
