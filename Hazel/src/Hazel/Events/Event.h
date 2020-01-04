@@ -1,5 +1,6 @@
 #pragma once
 
+#include "hzpch.h"
 #include "Core.h"
 
 namespace Hazel
@@ -7,7 +8,7 @@ namespace Hazel
 	enum class EventType
 	{
 		None = 0,
-		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved, AppTick, AppUpdate, AppRender, KeyPressed, KeyReleased, MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved, AppTick, AppUpdate, AppRender, KeyPressed, KeyReleased, KeyTyped, MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
 	enum EventCategory
@@ -39,14 +40,12 @@ namespace Hazel
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;
+	
+		bool Handled = false;
 	};
 
 	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
 			: m_Event(event)
@@ -54,21 +53,25 @@ namespace Hazel
 		}
 
 		template<typename T>
+		using EventFn = std::function<bool(T&)>;
+
+		template<typename T>
 		bool Dispatch(EventFn<T> func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;
 		}
+
 	private:
 		Event& m_Event;
 	};
 
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
-		return os << e.ToString();
+		return os << e.ToString() << " [in Event.h]";
 	}
 }
