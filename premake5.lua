@@ -9,20 +9,27 @@ workspace "Hazel"
 		"Dist"
 	}
 
+	flags
+	{
+		--"MultiProcessorCompile"
+	}
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
+IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
+IncludeDir["ImGui"] = "Hazel/vendor/imgui"
 
 include "Hazel/vendor/GLFW"
+include "Hazel/vendor/Glad"
+include "Hazel/vendor/imgui"
 
 project "Hazel"
 	location "Hazel"
 	kind "SharedLib"
 	language "C++"
-	cppdialect "C++17"
-	staticruntime "On"
 
 	targetdir ("%{prj.name}/" .. outputdir .. "/bin")
 	objdir ("%{prj.name}/" .. outputdir .. "/bin-int")
@@ -40,53 +47,61 @@ project "Hazel"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
+		"ImGui",
 		"Opengl32.lib"
 	}
 
 	filter "system:windows"
+		cppdialect "C++17"
+		staticruntime "on"
 		systemversion "latest"
 
 		defines
 		{
 			"HZ_PLATFORM_WINDOWS",
-			"HZ_BUILD_DLL"
+			"HZ_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 	
 		postbuildcommands
 		{
-			("powershell -command \"Start-Sleep -s 2\""),
+			--("powershell -command \"Start-Sleep -s 1\""),
 			("xcopy \"C:\\Users\\gabri\\Documents\\Visual Studio 2019\\Projetos\\Game_Engine\\Hazel\\bin\\Debug-x64\\Hazel\\Hazel.dll\" \"C:\\Users\\gabri\\Documents\\Visual Studio 2019\\Projetos\\Game_Engine\\Hazel\\bin\\Debug-x64\\Sandbox\" /Y /V /F"),
-			("powershell -command \"Start-Sleep -s 2\""),
+			--("powershell -command \"Start-Sleep -s 1\""),
 			("xcopy \"C:\\Users\\gabri\\Documents\\Visual Studio 2019\\Projetos\\Game_Engine\\Hazel\\Debug-windows-x86_64\\bin\\Hazel.dll\" \"C:\\Users\\gabri\\Documents\\Visual Studio 2019\\Projetos\\Game_Engine\\Sandbox\\Debug-windows-x86_64\\bin\" /Y /V /F")
 		}
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		runtime "Debug"
+		buildoptions "/MDd"
+		--runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_Release"
-		runtime "Release"
+		buildoptions "/MD"
+		--runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
-		runtime "Release"
+		--runtime "Release"
+		buildoptions "/MD"
 		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
-	staticruntime "on"
 
 	targetdir ("%{prj.name}/" .. outputdir .. "/bin")
 	objdir ("%{prj.name}/" .. outputdir .. "/bin-int")
@@ -110,6 +125,8 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
+		cppdialect "C++17"
+		staticruntime "on"
 		systemversion "latest"
 
 		defines
@@ -119,17 +136,20 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		runtime "Debug"
+		buildoptions "/MDd"
+		--runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
-		runtime "Release"
+		--runtime "Release"
+		buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
-		runtime "Release"
+		--runtime "Release"
+		buildoptions "/MD"
 		optimize "on"
 
 
@@ -156,7 +176,7 @@ project "GLFW"
 	filter "system:linux"
 		pic "On"
 		systemversion "latest"
-		staticruntime "On"
+		staticruntime "on"
 
 		files
 		{
@@ -179,7 +199,7 @@ project "GLFW"
 
 	filter "system:windows"
 		systemversion "latest"
-		staticruntime "On"
+		staticruntime "on"
 
 		files
 		{
@@ -199,6 +219,74 @@ project "GLFW"
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
+
+	filter "configurations:Debug"
+		runtime "Debug"
+		buildoptions "/MDd"
+		symbols "on"
+
+	filter "configurations:Release"
+		runtime "Release"
+		buildoptions "/MD"
+		optimize "on"
+
+project "Glad"
+	kind "StaticLib"
+	language "C"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"include/glad/glad.h",
+		"include/KHR/khrplatform.h",
+		"src/glad.c"
+	}
+
+	includedirs
+	{
+		"include"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+		staticruntime "On"
+
+	filter { "system:windows", "configurations:Release" }
+		buildoptions "/MT"
+
+project "ImGui"
+	kind "StaticLib"
+	language "C++"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"imconfig.h",
+		"imgui.h",
+		"imgui.cpp",
+		"imgui_draw.cpp",
+		"imgui_internal.h",
+		"imgui_widgets.cpp",
+		"imstb_rectpack.h",
+		"imstb_textedit.h",
+		"imstb_truetype.h",
+		"imgui_demo.cpp"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+		cppdialect "C++17"
+		staticruntime "On"
+
+	filter "system:linux"
+		pic "On"
+		systemversion "latest"
+		cppdialect "C++17"
+		staticruntime "On"
 
 	filter "configurations:Debug"
 		runtime "Debug"
