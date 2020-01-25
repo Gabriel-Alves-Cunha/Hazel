@@ -1,9 +1,4 @@
-#include <hzpch.h>
 #include <Hazel.h>
-#include <../src/Hazel/EntryPoint.h>
-#include <../src/Hazel/Layer.h>
-#include <../src/Hazel/LayerStack.h>
-#include <../src/Hazel/LayerStack.cpp>
 
 class ExampleLayer : public Hazel::Layer
 {
@@ -15,12 +10,12 @@ public:
 
 	void OnUpdate() override
 	{
-		HZ_INFO("ExampleLayer::Update");
+		//HZ_INFO("ExampleLayer::OnUpdate");
 	}
 
 	void OnEvent(Hazel::Event& event) override
 	{
-		HZ_TRACE("{0}", event);
+		//HZ_TRACE("{0}", event);
 	}
 };
 
