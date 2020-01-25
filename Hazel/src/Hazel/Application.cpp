@@ -7,7 +7,7 @@
 
 #include "Input.h"
 
-#include <glfw/glfw3.h>
+//#include <glfw/glfw3.h>
 
 namespace Hazel
 {
@@ -65,8 +65,7 @@ namespace Hazel
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
-			auto [x, y] = Input::GetMousePos();
-			HZ_CORE_TRACE("{0}, {1}.", x, y);
+			//Input::IsKeyPressed();
 
 			m_Window->OnUpdate();
 		}
