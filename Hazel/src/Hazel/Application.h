@@ -7,7 +7,7 @@
 #include "Events/Event.h"
 #include "Hazel/Events/ApplicationEvent.h"
 
-//#include "Hazel/ImGui/ImGuiLayer.h"
+#include "Hazel/ImGui/ImGuiLayer.h"
 
 namespace Hazel {
 
@@ -33,12 +33,15 @@ namespace Hazel {
 		bool OnWindowResize(WindowResizeEvent& e);
 	
 		std::unique_ptr<Window> m_Window;
-		//ImGuiLayer* m_ImGuiLayer;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
-		//bool m_Minimized = false;
+		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 		//float m_LastFrameTime = 0.0f;
 	
+		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+
+	private:
 		static Application* s_Instance;
 	};
 
