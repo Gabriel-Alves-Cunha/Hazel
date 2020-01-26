@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
@@ -54,32 +54,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>Debug-windows-x86_64\bin\</OutDir>
-    <IntDir>Debug-windows-x86_64\bin-int\</IntDir>
+    <OutDir>..\bin\Debug-windows-x86_64\Hazel\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Hazel\</IntDir>
     <TargetName>Hazel</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>Release-windows-x86_64\bin\</OutDir>
-    <IntDir>Release-windows-x86_64\bin-int\</IntDir>
+    <OutDir>..\bin\Release-windows-x86_64\Hazel\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Hazel\</IntDir>
     <TargetName>Hazel</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>Dist-windows-x86_64\bin\</OutDir>
-    <IntDir>Dist-windows-x86_64\bin-int\</IntDir>
+    <OutDir>..\bin\Dist-windows-x86_64\Hazel\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Hazel\</IntDir>
     <TargetName>Hazel</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -90,20 +87,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>Debug-windows-x86_64\bin\Hazel.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Hazel\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Sandbox" /Y /V /F
-xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\Debug-windows-x86_64\bin\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Sandbox\Debug-windows-x86_64\bin" /Y /V /F</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -118,20 +112,17 @@ xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\De
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>Release-windows-x86_64\bin\Hazel.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Hazel\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Sandbox" /Y /V /F
-xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\Debug-windows-x86_64\bin\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Sandbox\Debug-windows-x86_64\bin" /Y /V /F</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -146,13 +137,10 @@ xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\De
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>Dist-windows-x86_64\bin\Hazel.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Hazel\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\bin\Debug-x64\Sandbox" /Y /V /F
-xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\Debug-windows-x86_64\bin\Hazel.dll" "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Sandbox\Debug-windows-x86_64\bin" /Y /V /F</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Hazel.h" />
@@ -170,8 +158,9 @@ xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\De
     <ClInclude Include="src\Hazel\LayerStack.h" />
     <ClInclude Include="src\Hazel\Log.h" />
     <ClInclude Include="src\Hazel\MouseButtonCodes.h" />
+    <ClInclude Include="src\Hazel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Hazel\Window.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\hzpch.h" />
@@ -546,11 +535,12 @@ xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\De
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hazel\Application.cpp" />
+    <ClCompile Include="src\Hazel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hazel\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Hazel\Layer.cpp" />
     <ClCompile Include="src\Hazel\LayerStack.cpp" />
     <ClCompile Include="src\Hazel\Log.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\hzpch.cpp">
@@ -571,4 +561,4 @@ xcopy "C:\Users\gabri\Documents\Visual Studio 2019\Projetos\Game_Engine\Hazel\De
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 
