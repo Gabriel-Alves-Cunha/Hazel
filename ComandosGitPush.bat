@@ -10,5 +10,3 @@ git status
 git pull origin %branch%
 git push
 cmd /k
-
-PAUSE
