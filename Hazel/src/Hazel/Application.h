@@ -9,6 +9,9 @@
 
 #include "Hazel/ImGui/ImGuiLayer.h"
 
+#include "Hazel/Renderer/Shader.h"
+#include "Hazel/Renderer/Buffer.h"
+
 namespace Hazel {
 
 	class HAZEL_API Application
@@ -39,7 +42,11 @@ namespace Hazel {
 		LayerStack m_LayerStack;
 		//float m_LastFrameTime = 0.0f;
 	
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
+
+		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 
 	private:
 		static Application* s_Instance;
