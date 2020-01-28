@@ -7,6 +7,5 @@ git status
 set /p msg="Write the commit message, please: "
 git commit -m "%msg%" --date=rfc2822
 git status
-git pull origin %branch%
-git push
+git push --set-upstream origin %branch%
 cmd /k
