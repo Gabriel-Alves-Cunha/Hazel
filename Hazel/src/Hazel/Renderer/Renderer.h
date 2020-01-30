@@ -2,6 +2,9 @@
 
 #include "RenderCommand.h"
 
+#include "OrtographicCamera.h"
+#include "Shader.h"
+
 namespace Hazel
 {
 	class Renderer
@@ -12,10 +15,10 @@ namespace Hazel
 
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
-		static void BeginScene();
+		static void BeginScene(OrtographicCamera& camera);
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
@@ -25,6 +28,6 @@ namespace Hazel
 			glm::mat4 ViewProjectionMatrix;
 		};
 
-		//static Scope<SceneData> s_SceneData;
+		static SceneData* m_SceneData;
 	};
 }

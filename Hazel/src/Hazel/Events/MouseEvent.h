@@ -17,7 +17,7 @@ namespace Hazel
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY << " [in MouseEvent.h]";
+			ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
 			return ss.str();
 		}
 
@@ -40,7 +40,7 @@ namespace Hazel
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset() << " [in MouseEvent.h]";
+			ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
 			return ss.str();
 		}
 
