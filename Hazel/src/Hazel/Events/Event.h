@@ -27,9 +27,8 @@ namespace Hazel
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class HAZEL_API Event
+	class  Event
 	{
-		//friend class EventDispatcher;
 	public:
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
@@ -55,12 +54,12 @@ namespace Hazel
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
 
-		template<typename T>
-		bool Dispatch(EventFn<T> func)
+		template<typename T, typename F>
+		bool Dispatch(const F& func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(static_cast<T&>(m_Event));
 				return true;
 			}
 			return false;
@@ -72,6 +71,6 @@ namespace Hazel
 
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
-		return os << e.ToString() << " [in Event.h]";
+		return os << e.ToString();
 	}
 }

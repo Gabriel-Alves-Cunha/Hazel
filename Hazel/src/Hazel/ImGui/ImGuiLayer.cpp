@@ -1,9 +1,9 @@
 #include "hzpch.h"
 #include "ImGuiLayer.h"
 
-#include "imgui.h"
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
+#include <imgui.h>
+#include <examples/imgui_impl_glfw.h>
+#include <examples/imgui_impl_opengl3.h>
 
 #include "Hazel/Application.h"
 
@@ -15,10 +15,6 @@ namespace Hazel
 {
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
-	{
-	}
-	
-	ImGuiLayer::~ImGuiLayer()
 	{
 	}
 
@@ -58,13 +54,7 @@ namespace Hazel
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnImGuiRender()
-	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
-		//ImGui::Begin();
-	}
+	//void ImGuiLayer::OnImGuiRender(){	static bool show = true; ImGui::ShowDemoWindow(&show);/*ImGui::Begin();*/}
 
 	void ImGuiLayer::Begin()
 	{
@@ -77,7 +67,7 @@ namespace Hazel
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
 		// Rendering
 		ImGui::Render();
