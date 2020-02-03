@@ -134,6 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ExampleLayer.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\ExampleLayer.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
@@ -143,7 +146,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ExampleLayer.h" />
+    <Image Include="..\..\..\..\..\Downloads\Checkerboard.png" />
+    <Image Include="assets\textures\Checkerboard.png" />
+    <Image Include="assets\textures\ChernoLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
