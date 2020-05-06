@@ -3,8 +3,8 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Hazel/LayerStack.h"
-#include "Events/Event.h"
+#include "Hazel/Core/LayerStack.h"
+#include "Hazel/Events/Event.h"
 #include "Hazel/Events/ApplicationEvent.h"
 
 #include "Hazel/Core/TimeStep.h"
@@ -38,8 +38,8 @@ namespace Hazel {
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
-		bool m_Minimized = false;
 		LayerStack m_LayerStack;
+	public: bool m_WindowMinimized = false;
 		float m_LastFrameTime = 0.0f;
 
 	private:

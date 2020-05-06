@@ -1,5 +1,5 @@
 #include "hzpch.h"
-#include "Hazel/Window.h"
+#include "Hazel/Core/Window.h"
 
 #ifdef HZ_PLATFORM_WINDOWS
 	#include "Platform/Windows/WindowsWindow.h"

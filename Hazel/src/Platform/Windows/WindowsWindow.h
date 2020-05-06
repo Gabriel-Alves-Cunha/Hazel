@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Window.h"
+#include "Hazel/Core/Window.h"
 #include "Hazel/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
@@ -29,7 +29,6 @@ namespace Hazel
 
 	private:
 		virtual void Init(const WindowProps& props);
-
 		virtual void Shutdown();
 
 	private:

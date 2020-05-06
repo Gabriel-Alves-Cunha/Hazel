@@ -10,6 +10,10 @@
 #include "Hazel/Renderer/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
+#include <Hazel/Core/Application.h>
+
+#include <GLFW/glfw3.h>
+#include <glad\glad.h>
 
 namespace Hazel
 {
@@ -24,18 +28,22 @@ namespace Hazel
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
-		// HZ_PROFILE_FUNCTION();
+		HZ_PROFILE_FUNCTION();
 
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		HZ_PROFILE_FUNCTION();
+
 		Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		HZ_PROFILE_FUNCTION();
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -46,23 +54,28 @@ namespace Hazel
 		{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
+			glfwWindowHint(GLFW_SAMPLES, 4);
 			HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
 		{
 			//HZ_PROFILE_SCOPE("glfwCreateWindow");
-			#if defined(HZ_DEBUG)
-				if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+#if defined(HZ_DEBUG)
+			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-			#endif
-
+#endif
+		//}
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWwindowCount;
 		}
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_Context = GraphicsContext::Create(m_Window);
-		m_Context->Init();		
+		m_Context->Init();
+
+		glEnable(GL_MULTISAMPLE);
+		//glEnable(GL_DEPTH_TEST);
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -73,7 +86,7 @@ namespace Hazel
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
-			
+
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 		});
@@ -123,7 +136,7 @@ namespace Hazel
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			
+
 			switch(action)
 			{
 				case GLFW_PRESS:
@@ -160,6 +173,8 @@ namespace Hazel
 
 	void WindowsWindow::Shutdown()
 	{
+		HZ_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
 		--s_GLFWwindowCount;
 
@@ -171,12 +186,18 @@ namespace Hazel
 
 	void WindowsWindow::OnUpdate()
 	{
+		HZ_PROFILE_FUNCTION();
+
 		glfwPollEvents();
-		m_Context->SwapBuffers();
+		//if (!m_WindowMinimized) {
+			m_Context->SwapBuffers();
+		//}
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		HZ_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "hzpch.h"
-#include "../Core.h"
+#include "Hazel/Core/Core.h"
 
 namespace Hazel
 {
@@ -39,7 +39,7 @@ namespace Hazel
 		{
 			return GetCategoryFlags() & category;
 		}
-	
+
 		bool Handled = false;
 	};
 
@@ -71,6 +71,6 @@ namespace Hazel
 
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
-		return os << e.ToString();
+		return os<<e.ToString();
 	}
 }

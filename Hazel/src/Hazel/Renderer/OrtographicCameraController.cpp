@@ -2,7 +2,7 @@
 #include "Hazel/Renderer/OrtographicCameraController.h"
 
 #include "Hazel/Core/Input.h"
-#include "Hazel/KeyCodes.h"
+#include "Hazel/Core/KeyCodes.h"
 
 namespace Hazel {
 
@@ -13,7 +13,7 @@ namespace Hazel {
 
 	void OrtographicCameraController::OnUpdate(TimeStep ts)
 	{
-		//HZ_PROFILE_FUNCTION();
+		HZ_PROFILE_FUNCTION();
 
 		if (Input::IsKeyPressed(HZ_KEY_A))
 		{
@@ -59,7 +59,7 @@ namespace Hazel {
 
 	void OrtographicCameraController::OnEvent(Event& e)
 	{
-		//HZ_PROFILE_FUNCTION();
+		HZ_PROFILE_FUNCTION();
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(HZ_BIND_EVENT_FN(OrtographicCameraController::OnMouseScrolled));
@@ -68,21 +68,23 @@ namespace Hazel {
 
 	bool OrtographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		//HZ_PROFILE_FUNCTION();
+		HZ_PROFILE_FUNCTION();
 
 		m_ZoomLevel -= e.GetYOffset() * 0.25f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+
 		return false;
 	}
 
 	bool OrtographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
-		//HZ_PROFILE_FUNCTION();
+		HZ_PROFILE_FUNCTION();
 
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
+
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+
 		return false;
 	}
-
 }
