@@ -18,7 +18,7 @@ namespace Hazel {
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Hazel App");
 		virtual ~Application();
 
 		void OnEvent(Event& e);
@@ -26,9 +26,13 @@ namespace Hazel {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		inline Window& GetWindow() { return *m_Window; }
+		Window& GetWindow() { return *m_Window; }
 
-		inline static Application& Get() { return *s_Instance; }
+		void CloseWindow();
+
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
+		static Application& Get() { return *s_Instance; }
 
 	private:
 		void Run();
@@ -38,8 +42,8 @@ namespace Hazel {
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
+		bool m_WindowMinimized = false;
 		LayerStack m_LayerStack;
-	public: bool m_WindowMinimized = false;
 		float m_LastFrameTime = 0.0f;
 
 	private:
@@ -50,3 +54,4 @@ namespace Hazel {
 	// To be defined in client
 	Application* CreateApplication();
 }
+

@@ -76,12 +76,13 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HZ_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -89,7 +90,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -97,15 +98,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HZ_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -114,7 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -122,15 +123,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLFW_INCLUDE_NONE;HZ_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HZ_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,6 +163,8 @@
     <ClInclude Include="src\Hazel\Events\MouseEvent.h" />
     <ClInclude Include="src\Hazel\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Hazel\Renderer\Buffer.h" />
+    <ClInclude Include="src\Hazel\Renderer\Camera.h" />
+    <ClInclude Include="src\Hazel\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Hazel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Hazel\Renderer\OrtographicCamera.h" />
     <ClInclude Include="src\Hazel\Renderer\OrtographicCameraController.h" />
@@ -172,13 +175,18 @@
     <ClInclude Include="src\Hazel\Renderer\Shader.h" />
     <ClInclude Include="src\Hazel\Renderer\Texture.h" />
     <ClInclude Include="src\Hazel\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Hazel\Scene\Components.h" />
+    <ClInclude Include="src\Hazel\Scene\Entity.h" />
+    <ClInclude Include="src\Hazel\Scene\Scene.h" />
+    <ClInclude Include="src\Hazel\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Hazel\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\hzpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -553,7 +561,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hazel\Core\Application.cpp" />
-    <ClCompile Include="src\Hazel\Core\Input.cpp" />
     <ClCompile Include="src\Hazel\Core\Layer.cpp" />
     <ClCompile Include="src\Hazel\Core\LayerStack.cpp" />
     <ClCompile Include="src\Hazel\Core\Log.cpp" />
@@ -561,6 +568,7 @@
     <ClCompile Include="src\Hazel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hazel\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Hazel\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Hazel\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Hazel\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Hazel\Renderer\OrtographicCamera.cpp" />
     <ClCompile Include="src\Hazel\Renderer\OrtographicCameraController.cpp" />
@@ -571,8 +579,12 @@
     <ClCompile Include="src\Hazel\Renderer\Shader.cpp" />
     <ClCompile Include="src\Hazel\Renderer\Texture.cpp" />
     <ClCompile Include="src\Hazel\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Hazel\Scene\Entity.cpp" />
+    <ClCompile Include="src\Hazel\Scene\Scene.cpp" />
+    <ClCompile Include="src\Hazel\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />

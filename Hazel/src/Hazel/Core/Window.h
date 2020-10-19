@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 #include "hzpch.h"
 
 #include "Core.h"
@@ -11,12 +13,12 @@ namespace Hazel
 	struct WindowProps
 	{
 		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		ui32 Width;
+		ui32 Height;
 
 		WindowProps(const std::string& title = "Hazel Engine",
-			unsigned int width = 1280,
-			unsigned int height = 720)
+			ui32 width = 1280,
+			ui32 height = 720)
 			: Title(title), Width(width), Height(height)
 		{
 		}
@@ -32,8 +34,8 @@ namespace Hazel
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual ui32 GetWidth() const = 0;
+		virtual ui32 GetHeight() const = 0;
 
 		// Window attributes
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;

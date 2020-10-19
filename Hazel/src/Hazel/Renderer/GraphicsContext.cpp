@@ -4,7 +4,8 @@
 #include "Hazel/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
-namespace Hazel {
+namespace Hazel
+{
 
 	Scope<GraphicsContext> GraphicsContext::Create(void* window)
 	{

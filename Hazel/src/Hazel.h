@@ -1,6 +1,6 @@
 #pragma once
 
-// For use by Hazel apllications
+// For use by Hazel applications
 
 #include "Hazel/Core/Core.h"
 
@@ -17,15 +17,21 @@
 
 #include "Hazel/ImGui/ImGuiLayer.h"
 
-// --RENDERER--------------------
+#include "Hazel/Scene/Scene.h"
+#include "Hazel/Scene/Entity.h"
+#include "Hazel/Scene/ScriptableEntity.h"
+#include "Hazel/Scene/Components.h"
+
+// ---Renderer------------------------
 #include "Hazel/Renderer/Renderer.h"
 #include "Hazel/Renderer/Renderer2D.h"
 #include "Hazel/Renderer/RenderCommand.h"
 
 #include "Hazel/Renderer/Buffer.h"
 #include "Hazel/Renderer/Shader.h"
+#include "Hazel/Renderer/FrameBuffer.h"
 #include "Hazel/Renderer/Texture.h"
 #include "Hazel/Renderer/VertexArray.h"
 
 #include "Hazel/Renderer/OrtographicCamera.h"
-// -------------------------------
+// -----------------------------------

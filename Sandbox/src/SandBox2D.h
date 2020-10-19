@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Hazel.h>
+#include "Hazel.h"
 
 class SandBox2D : public Hazel::Layer
 {
@@ -11,8 +11,8 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	virtual void OnImGuiRender() override;
 	void OnUpdate(Hazel::TimeStep ts) override;
+	virtual void OnImGuiRender() override;
 	void OnEvent(Hazel::Event& e) override;
 
 private:
@@ -20,7 +20,7 @@ private:
 
 	// Temp
 	Hazel::Ref<Hazel::VertexArray> m_SquareVA;
-	Hazel::Ref<Hazel::Shader> m_FlatColorShader, m_Shader;
+	Hazel::Ref<Hazel::Shader> m_FlatColorShader;
 
 	Hazel::Ref<Hazel::Texture2D> m_CheckerboardTexture;
 

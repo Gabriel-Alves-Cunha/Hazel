@@ -28,7 +28,7 @@ OpenGLShader::OpenGLShader(const std::string &filepath)
 	auto shaderSources = PreProcess(source);
 	Compile(shaderSources);
 
-	// Extract name from filepath (very cool)
+	// Extract name from filepath
 	auto lastSlash = filepath.find_last_of("/\\");
 	lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
 	auto lastDot = filepath.rfind('.');
@@ -69,7 +69,6 @@ std::string OpenGLShader::ReadFile(const std::string &filepath)
 			result.resize(size);
 			in.seekg(0, std::ios::beg);
 			in.read(&result[0], size);
-			in.close();
 		}
 		else
 		{
@@ -118,7 +117,7 @@ void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string> &shader
 	GLuint program = glCreateProgram();
 	HZ_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now!");
 	std::array<GLenum, 2> glShaderIDs; //std::array is fixed size.
-	short glShaderIDIndex = 0;
+	int glShaderIDIndex = 0;
 	for (auto &kv : shaderSources)
 	{
 		GLenum type = kv.first;
@@ -159,7 +158,7 @@ void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string> &shader
 
 	// Note the different functions here: glGetProgram* instead of glGetShader*.
 	GLint isLinked = 0;
-	glGetProgramiv(program, GL_LINK_STATUS, (int *)&isLinked);
+	glGetProgramiv(program, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
 		GLint maxLength = 0;
@@ -210,8 +209,6 @@ void OpenGLShader::SetInt(const std::string &name, int value)
 
 void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
 {
-	HZ_PROFILE_FUNCTION();
-
 	UploadUniformIntArray(name, values, count);
 }
 

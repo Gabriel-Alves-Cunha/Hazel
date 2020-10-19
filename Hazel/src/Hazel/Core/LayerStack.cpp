@@ -31,7 +31,7 @@ namespace Hazel
 		{
 			layer->OnDetach();
 			m_Layers.erase(it);
-			m_LayerInsertIndex--;
+			--m_LayerInsertIndex;
 		}
 	}
 

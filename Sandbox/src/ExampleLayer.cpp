@@ -16,8 +16,7 @@ ExampleLayer::ExampleLayer()
 		 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 	};
 
-	Hazel::Ref<Hazel::VertexBuffer> vertexBuffer =
-		Hazel::VertexBuffer::Create(vertices, sizeof(vertices));
+	Hazel::Ref<Hazel::VertexBuffer> vertexBuffer = Hazel::VertexBuffer::Create(vertices, sizeof(vertices));
 	Hazel::BufferLayout layout = {
 		{ Hazel::ShaderDataType::Float3, "a_Position" },
 		{ Hazel::ShaderDataType::Float4, "a_Color" }
@@ -26,8 +25,7 @@ ExampleLayer::ExampleLayer()
 	m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 	uint32_t indices[3] = { 0, 1, 2 };
-	Hazel::Ref<Hazel::IndexBuffer> indexBuffer =
-		Hazel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+	Hazel::Ref<Hazel::IndexBuffer> indexBuffer = Hazel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 	m_VertexArray->SetIndexBuffer(indexBuffer);
 
 	m_SquareVA = Hazel::VertexArray::Create();
@@ -39,8 +37,7 @@ ExampleLayer::ExampleLayer()
 		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 	};
 
-	Hazel::Ref<Hazel::VertexBuffer> squareVB =
-		Hazel::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+	Hazel::Ref<Hazel::VertexBuffer> squareVB = Hazel::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 	squareVB->SetLayout({
 		{ Hazel::ShaderDataType::Float3, "a_Position" },
 		{ Hazel::ShaderDataType::Float2, "a_TexCoord" }
@@ -48,8 +45,7 @@ ExampleLayer::ExampleLayer()
 	m_SquareVA->AddVertexBuffer(squareVB);
 
 	uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-	Hazel::Ref<Hazel::IndexBuffer> squareIB =
-		Hazel::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+	Hazel::Ref<Hazel::IndexBuffer> squareIB = Hazel::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 	m_SquareVA->SetIndexBuffer(squareIB);
 
 	std::string vertexSrc = R"(
@@ -157,25 +153,20 @@ void ExampleLayer::OnUpdate(Hazel::TimeStep ts)
 	m_FlatColorShader->SetFloat3("u_Color", m_SquareColor);
 
 	for (int y = 0; y < 20; ++y)
-	{
 		for (int x = 0; x < 20; ++x)
 		{
 			glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
 			Hazel::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 		}
-	}
 
 	auto textureShader = m_ShaderLibrary.Get("Texture");
 
 	m_Texture->Bind();
 	Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 	m_ChernoLogoTexture->Bind();
-	Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::translate(glm::mat4(1.0f), glm::vec3(0.25, -0.25, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-	//m_ChernoLogoTexture->Bind();
-	//Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
+	Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+	
 	// Triangle
 	// Hazel::Renderer::Submit(m_Shader, m_VertexArray);
 
@@ -184,7 +175,7 @@ void ExampleLayer::OnUpdate(Hazel::TimeStep ts)
 
 void ExampleLayer::OnImGuiRender()
 {
-	ImGui::Begin("Color Settings");
+	ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
 	ImGui::End();
 }

@@ -1,10 +1,14 @@
-# Directories
-.vs/
-bin/
+# Binaries
+**/bin/
+!vendor/bin/premake/
 bin-int/
-Debug/
-.gitmodules
 
-# Files
+# Hazel files
+*.log
 
-*.user
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user

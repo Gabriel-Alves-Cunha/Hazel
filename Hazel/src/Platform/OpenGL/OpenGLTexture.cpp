@@ -1,11 +1,11 @@
 #include "hzpch.h"
 #include "OpenGLTexture.h"
 
-#include "stb_image.h"
+#include <stb_image.h>
 
 namespace Hazel
 {
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+	OpenGLTexture2D::OpenGLTexture2D(ui32 width, ui32 height)
 		: m_Height(height), m_Width(width)
 	{
 		HZ_PROFILE_FUNCTION();
@@ -32,7 +32,7 @@ namespace Hazel
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc *data = nullptr;
 		{
-			HZ_PROFILE_SCOPE("stbi_load - OpenGLTexture2D(const std::string& path)");
+			HZ_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std::string& path)");
 
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		}
@@ -85,7 +85,7 @@ namespace Hazel
 		HZ_PROFILE_FUNCTION();
 
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
-		HZ_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture");
+		HZ_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 	}

@@ -1,6 +1,6 @@
 workspace "Hazel"
-	architecture "x64"
-	startproject "Sandbox"
+	architecture "x86_64"
+	startproject "HazelNut"
 
 	configurations
 	{
@@ -11,8 +11,12 @@ workspace "Hazel"
 
 	flags
 	{
-		--"MultiProcessorCompile"
+		"MultiProcessorCompile"
 	}
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -23,10 +27,17 @@ IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
 IncludeDir["ImGui"] = "Hazel/vendor/imgui"
 IncludeDir["glm"] = "Hazel/vendor/glm"
 IncludeDir["stb_image"] = "Hazel/vendor/stb_image"
+IncludeDir["entt"] = "Hazel/vendor/entt/include"
 
-include "Hazel/vendor/GLFW"
-include "Hazel/vendor/Glad"
-include "Hazel/vendor/imgui"
+group "Dependencies"
+	include "Hazel/vendor/GLFW"
+	include "Hazel/vendor/Glad"
+	include "Hazel/vendor/imgui"
+group ""
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
 
 project "Hazel"
 	location "Hazel"
@@ -53,7 +64,8 @@ project "Hazel"
 
 	defines
 	{
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
 	}
 
 	includedirs
@@ -64,7 +76,8 @@ project "Hazel"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -72,7 +85,7 @@ project "Hazel"
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"Opengl32.lib"
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -80,9 +93,6 @@ project "Hazel"
 
 		defines
 		{
-			"HZ_PLATFORM_WINDOWS",
-			"HZ_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
 		}
 
 		--DOESNT NEED TO EXIST BECAUSE IS STATIC LIB
@@ -96,21 +106,22 @@ project "Hazel"
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		buildoptions "/MDd"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "HZ_Release"
-		buildoptions "/MD"
+		defines "HZ_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
 		runtime "Release"
-		buildoptions "/MD"
 		optimize "on"
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
 
 project "Sandbox"
 	location "Sandbox"
@@ -119,8 +130,8 @@ project "Sandbox"
 	cppdialect "C++17"
 	staticruntime "on"
 
-	targetdir ("%{prj.name}/" .. outputdir .. "/bin")
-	objdir ("%{prj.name}/" .. outputdir .. "/bin-int")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
@@ -144,25 +155,119 @@ project "Sandbox"
 	filter "system:windows"
 		systemversion "latest"
 
-		defines
-		{
-			"HZ_PLATFORM_WINDOWS"
-		}
-
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		buildoptions "/MDd"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
 		runtime "Release"
-		buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
 		runtime "Release"
-		buildoptions "/MD"
 		optimize "on"
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+project "HazelNut"
+	location "HazelNut"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Hazel/vendor/spdlog/include",
+		"Hazel/src",
+		"Hazel/vendor",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
+	}
+
+	links
+	{
+		"Hazel"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+	filter "configurations:Debug"
+		defines "HZ_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "HZ_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "HZ_DIST"
+		runtime "Release"
+		optimize "on"
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+--project "EmbeddingLua"
+--	location "EmbeddingLua"
+--	kind "ConsoleApp"
+--	language "C++"
+--	cppdialect "C++17"
+--	staticruntime "on"
+--
+--	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+--	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+--
+--	files
+--	{
+--		"%{prj.name}/src/**.h",
+--		"%{prj.name}/src/**.cpp"
+--	}
+--
+--	includedirs
+--	{
+--		"%{prj.name}/lua53/lua-5.3.5/src"
+--	}
+--
+--	links
+--	{
+--		--"Hazel"
+--		"%{prj.name}/lua53/lua53-lib/lua53.dll",
+--		"%{prj.name}/lua53/lua53-lib/lua53.lib"
+--	}
+--
+--	filter "system:windows"
+--		systemversion "latest"
+--
+--	filter "configurations:Debug"
+--		defines "HZ_DEBUG"
+--		runtime "Debug"
+--		symbols "on"
+--
+--	filter "configurations:Release"
+--		defines "HZ_RELEASE"
+--		runtime "Release"
+--		optimize "on"
+--
+--	filter "configurations:Dist"
+--		defines "HZ_DIST"
+--		runtime "Release"
+--		optimize "on"

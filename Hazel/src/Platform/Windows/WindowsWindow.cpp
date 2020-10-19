@@ -10,21 +10,16 @@
 #include "Hazel/Renderer/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
-#include <Hazel/Core/Application.h>
-
-#include <GLFW/glfw3.h>
 #include <glad\glad.h>
 
 namespace Hazel
 {
-	static uint8_t s_GLFWwindowCount = 0;
+	static ui8 s_GLFWwindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
-		HZ_CORE_ERROR("GLFW error ({0}): {1}", error, description);
+		HZ_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
-
-	//Scope<Window> Window::Create(const WindowProps& props)	{return new WindowsWindos(props);	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
@@ -53,28 +48,26 @@ namespace Hazel
 		if (s_GLFWwindowCount == 0)
 		{
 			// TODO: glfwTerminate on system shutdown
+			HZ_PROFILE_SCOPE("glfwInit");
 			int success = glfwInit();
-			glfwWindowHint(GLFW_SAMPLES, 4);
 			HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
 		{
-			//HZ_PROFILE_SCOPE("glfwCreateWindow");
+			HZ_PROFILE_SCOPE("glfwCreateWindow");
 #if defined(HZ_DEBUG)
 			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 #endif
-		//}
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWwindowCount;
 		}
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 
-		glEnable(GL_MULTISAMPLE);
+		glEnable(GL_MULTISAMPLE); // TO SMOOTH RENDER
 		//glEnable(GL_DEPTH_TEST);
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -102,7 +95,7 @@ namespace Hazel
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			switch(action)
+			switch (action)
 			{
 				case GLFW_PRESS:
 				{
@@ -137,7 +130,7 @@ namespace Hazel
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			switch(action)
+			switch (action)
 			{
 				case GLFW_PRESS:
 				{
@@ -178,10 +171,7 @@ namespace Hazel
 		glfwDestroyWindow(m_Window);
 		--s_GLFWwindowCount;
 
-		if (s_GLFWwindowCount == 0)
-		{
-			glfwTerminate();
-		}
+		if (s_GLFWwindowCount == 0)	glfwTerminate();
 	}
 
 	void WindowsWindow::OnUpdate()
@@ -189,9 +179,8 @@ namespace Hazel
 		HZ_PROFILE_FUNCTION();
 
 		glfwPollEvents();
-		//if (!m_WindowMinimized) {
-			m_Context->SwapBuffers();
-		//}
+
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
