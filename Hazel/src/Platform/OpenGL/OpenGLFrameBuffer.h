@@ -15,7 +15,7 @@ namespace Hazel
 		virtual void Bind() override;
 		virtual void UnBind() override;
 
-		virtual void Resize(ui32 w, ui32 h) override;
+		virtual void Resize(ui32 width, ui32 height) override;
 
 		virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
 

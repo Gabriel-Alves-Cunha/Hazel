@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
-#include "./Panels/SceneHierarchyPanel.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Hazel
 {
@@ -19,7 +19,14 @@ namespace Hazel
 		void OnEvent(Event& e) override;
 
 	private:
-		Hazel::OrtographicCameraController m_CameraController;
+		bool OnKeyPressed(KeyPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+
+	private:
+		Hazel::OrthographicCameraController m_CameraController;
 
 		// Temp
 		Ref<VertexArray> m_SquareVA;

@@ -1,6 +1,6 @@
 #include "hzpch.h"
-#include "Renderer.h"
-#include "Renderer2D.h"
+#include "Hazel/Renderer/Renderer.h"
+#include "Hazel/Renderer/Renderer2D.h"
 
 namespace Hazel
 {
@@ -24,7 +24,7 @@ namespace Hazel
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrtographicCamera& camera)
+	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}

@@ -1,5 +1,5 @@
 #include "hzpch.h"
-#include "OpenGLFrameBuffer.h"
+#include "Platform/OpenGL/OpenGLFramebuffer.h"
 
 #include <glad/glad.h>
 
@@ -61,16 +61,16 @@ namespace Hazel
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void OpenGLFrameBuffer::Resize(ui32 w, ui32 h)
+	void OpenGLFrameBuffer::Resize(ui32 width, ui32 height)
 	{
-		if (w == 0 || h == 0 || w > s_MaxFrameBufferSize || h > s_MaxFrameBufferSize)
+		if (width == 0 || height == 0 || width > s_MaxFrameBufferSize || height > s_MaxFrameBufferSize)
 		{
-			HZ_CORE_WARN("Attempted to resize framebuffer to {0}, {1}", w, h);
+			HZ_CORE_WARN("Attempted to resize framebuffer to {0}, {1}", width, height);
 			return;
 		}
 
-		m_Spec.width = w;
-		m_Spec.height = h;
+		m_Spec.width = width;
+		m_Spec.height = height;
 
 		Invalidate();
 	}

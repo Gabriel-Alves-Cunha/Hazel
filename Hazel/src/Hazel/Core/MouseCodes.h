@@ -21,24 +21,6 @@ namespace Hazel
 			ButtonLeft = Button0,
 			ButtonRight = Button1,
 			ButtonMiddle = Button2
-	};
-
-	inline std::ostream& operator<<(std::ostream& os, MouseCode mouseCode)
-	{
-		os << static_cast<i32>(mouseCode);
-		return os;
+		};
 	}
 }
-
-#define HZ_MOUSE_BUTTON_0      ::Hazel::Mouse::Button0
-#define HZ_MOUSE_BUTTON_1      ::Hazel::Mouse::Button1
-#define HZ_MOUSE_BUTTON_2      ::Hazel::Mouse::Button2
-#define HZ_MOUSE_BUTTON_3      ::Hazel::Mouse::Button3
-#define HZ_MOUSE_BUTTON_4      ::Hazel::Mouse::Button4
-#define HZ_MOUSE_BUTTON_5      ::Hazel::Mouse::Button5
-#define HZ_MOUSE_BUTTON_6      ::Hazel::Mouse::Button6
-#define HZ_MOUSE_BUTTON_7      ::Hazel::Mouse::Button7
-#define HZ_MOUSE_BUTTON_LAST   ::Hazel::Mouse::ButtonLast
-#define HZ_MOUSE_BUTTON_LEFT   ::Hazel::Mouse::ButtonLeft
-#define HZ_MOUSE_BUTTON_RIGHT  ::Hazel::Mouse::ButtonRight
-#define HZ_MOUSE_BUTTON_MIDDLE ::Hazel::Mouse::ButtonMiddle

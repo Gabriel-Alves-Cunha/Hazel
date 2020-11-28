@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Event.h"
-#include "Hazel/Core/Input.h"
+#include "Hazel/Events/Event.h"
+#include "Hazel/Core/MouseCodes.h"
 
 namespace Hazel
 {
@@ -56,7 +56,7 @@ namespace Hazel
 	public:
 		MouseCode GetMouseButton() const { return m_Button; }
 
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
 	protected:
 		MouseButtonEvent(const MouseCode button)
 			: m_Button(button) {}

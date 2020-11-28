@@ -36,11 +36,11 @@ void SandBox2D::OnUpdate(Hazel::TimeStep ts)
 	}
 
 	{
-		HZ_PROFILE_SCOPE("Renderer Draw::OnUpdate");
-
 		static float rotation = 0.0f;
 		rotation += ts * 50.0f;
 
+		HZ_PROFILE_SCOPE("Renderer Draw::OnUpdate");
+		
 		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 			Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });

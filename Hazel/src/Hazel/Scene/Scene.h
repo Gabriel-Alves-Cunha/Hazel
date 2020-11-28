@@ -1,8 +1,9 @@
 #pragma once
 
 #include "entt.hpp"
+
 #include "hzpch.h"
-#include <Hazel\Core\TimeStep.h>
+#include "Hazel\Core\TimeStep.h"
 
 namespace Hazel
 {
@@ -15,9 +16,14 @@ namespace Hazel
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		void DestroyEntity(Entity entity);
 
 		void OnUpdate(TimeStep ts);
 		void OnViewPortResize(ui32 width, ui32 height);
+
+	private:
+		template<typename T>
+		void OnComponentAdded(Entity entity, T& component);
 
 	private:
 		entt::registry m_Registry;

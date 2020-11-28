@@ -1,5 +1,5 @@
 #include "hzpch.h"
-#include "WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 #include "Hazel/Core/Input.h"
 
@@ -10,7 +10,6 @@
 #include "Hazel/Renderer/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
-#include <glad\glad.h>
 
 namespace Hazel
 {
@@ -47,7 +46,6 @@ namespace Hazel
 
 		if (s_GLFWwindowCount == 0)
 		{
-			// TODO: glfwTerminate on system shutdown
 			HZ_PROFILE_SCOPE("glfwInit");
 			int success = glfwInit();
 			HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
@@ -99,19 +97,19 @@ namespace Hazel
 			{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+					KeyPressedEvent event(key, 0);
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event(static_cast<KeyCode>(key));
+					KeyReleasedEvent event(key);
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event(static_cast<KeyCode>(key), 1);
+					KeyPressedEvent event(key, 1);
 					data.EventCallback(event);
 					break;
 				}
@@ -122,7 +120,7 @@ namespace Hazel
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				KeyTypedEvent event(static_cast<KeyCode>(keycode));
+				KeyTypedEvent event(keycode);
 				data.EventCallback(event);
 			});
 
@@ -134,13 +132,13 @@ namespace Hazel
 			{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event(static_cast<MouseCode>(button));
+					MouseButtonPressedEvent event(button);
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
+					MouseButtonReleasedEvent event(button);
 					data.EventCallback(event);
 					break;
 				}

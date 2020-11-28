@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
-#include "Layer.h"
+#include "Hazel/Core/Base.h"
+#include "Hazel/Core/Layer.h"
 
 #include <vector>
 

@@ -16,7 +16,7 @@ public:
 	void OnEvent(Hazel::Event& e) override;
 
 private:
-	Hazel::OrtographicCameraController m_CameraController;
+	Hazel::OrthographicCameraController m_CameraController;
 
 	// Temp
 	Hazel::Ref<Hazel::VertexArray> m_SquareVA;

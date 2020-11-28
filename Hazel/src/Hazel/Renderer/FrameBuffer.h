@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
+#include "Hazel/Core/Base.h"
 
 namespace Hazel
 {
@@ -18,7 +18,7 @@ namespace Hazel
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
 
-		virtual void Resize(ui32 w, ui32 h) = 0;
+		virtual void Resize(uint32_t width, uint32_t height) = 0;
 
 		virtual ui32 GetColorAttachmentRendererID() const = 0;
 
